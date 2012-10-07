@@ -25,18 +25,31 @@ int main(int argc, char* argv[]) {
   clock_t start, end;
   start = clock();
   Matrix matrix;
+  /*Read in height and width*/
   parseArguments(argc, argv, &matrix);
+  /*Allocate matrix on the heap*/
   initMatrix(&matrix);
+  /*Fill with random unsigned chars*/
   fillRandomData(&matrix);
   printMatrix(&matrix);
-
+  /*Differentiate and print*/
   int** dx = differentiateX(&matrix);
-  int** dy = differentiateY(&matrix);
   printArray(dx, matrix.width, matrix.height);
-  printf("The max and min for dx are: %d and %d\n", max(dx, matrix.width, matrix.height), min(dx, matrix.width, matrix.height));
+  int** dy = differentiateY(&matrix);
   printArray(dy, matrix.width, matrix.height);
+  /*Compute min and max*/
+  printf("The max and min for dx are: %d and %d\n", max(dx, matrix.width, matrix.height), min(dx, matrix.width, matrix.height));
   printf("The max and min for dy are: %d and %d\n", max(dy, matrix.width, matrix.height), min(dy, matrix.width, matrix.height));
-
+  /*Free everything*/
+  for (int x = 0; x < matrix.width; x++) {
+    free(matrix.data[x]);
+    free(dx[x]);
+    free(dy[x]);
+  }
+  free(matrix.data);
+  free(dx);
+  free(dy);
+  /*Print stats*/
   end = clock();
   printf("Total time taken: %.4f msec\n", (float) (end-start) / (CLOCKS_PER_SEC/1000));
   return 0;
