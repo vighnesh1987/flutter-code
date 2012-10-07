@@ -1,7 +1,7 @@
-CC=g++
-CFLAGS=-g 
+CC=gcc
+CFLAGS=-g
 EXECUTABLE=differentiate
-SOURCE=differentiate.cpp
+SOURCE=differentiate.c
 
 all: $(EXECUTABLE)
 
