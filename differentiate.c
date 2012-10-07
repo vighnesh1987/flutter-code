@@ -13,6 +13,7 @@ void parseArguments( int argc, char* argv[], Matrix* matrix );
 void initMatrix( Matrix* matrix );
 void fillRandomData( Matrix* matrix );
 int** differentiateX( Matrix* matrix );
+int** differentiateY( Matrix* matrix );
 
 void printMatrix( Matrix* matrix );
 void printArray( int** arr, int width, int height );
@@ -26,7 +27,9 @@ int main(int argc, char* argv[]) {
   printMatrix(&matrix);
 
   int** dx = differentiateX(&matrix);
+  int** dy = differentiateY(&matrix);
   printArray(dx, matrix.width, matrix.height);
+  printArray(dy, matrix.width, matrix.height);
   return 0;
 }
 
@@ -88,5 +91,20 @@ int** differentiateX(Matrix* matrix) {
     dx[matrix->width-1][y] = - matrix->data[matrix->width-2][y];
   }
   return dx;
+}
+
+int** differentiateY(Matrix* matrix) {
+  int** dy = malloc(sizeof(int*) * (matrix->height));
+  for (int y = 0; y < matrix->height; y++) {
+    dy[y] = malloc(sizeof(int) * (matrix->width ) );
+  }
+  for (int x = 0; x < matrix->width; x++) {
+    dy[x][0] = matrix->data[x][1];
+    for (int y = 1; y < matrix->height- 1; y++) {
+      dy[x][y] = (int) matrix->data[x][y+1] - matrix->data[x][y-1];
+    }
+    dy[x][matrix->height - 1] = - matrix->data[x][matrix->height - 2];
+  }
+  return dy;
 }
 
