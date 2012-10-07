@@ -1,0 +1,13 @@
+1. Although the image is unsigned char, we are interested in signed derivatives
+2. width corresponds to the x-direction, height corresponds to the y-direction
+   and we lie in the first quadrant
+              ^
+              |
+              |
+              |
+              |
+              |
+       y = 0  +-------------> x
+            x = 0
+
+
