@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#define RANGE 50
+#include<limits.h>
+#define RANGE (UCHAR_MAX + 1)
 
 typedef struct {
   int width;
@@ -14,6 +15,8 @@ void initMatrix( Matrix* matrix );
 void fillRandomData( Matrix* matrix );
 int** differentiateX( Matrix* matrix );
 int** differentiateY( Matrix* matrix );
+static inline int max(int** arr, int width, int height);
+static inline int min(int** arr, int width, int height);
 
 void printMatrix( Matrix* matrix );
 void printArray( int** arr, int width, int height );
@@ -29,7 +32,9 @@ int main(int argc, char* argv[]) {
   int** dx = differentiateX(&matrix);
   int** dy = differentiateY(&matrix);
   printArray(dx, matrix.width, matrix.height);
+  printf("The max and min for dx are: %d and %d\n", max(dx, matrix.width, matrix.height), min(dx, matrix.width, matrix.height));
   printArray(dy, matrix.width, matrix.height);
+  printf("The max and min for dy are: %d and %d\n", max(dy, matrix.width, matrix.height), min(dy, matrix.width, matrix.height));
   return 0;
 }
 
@@ -53,7 +58,7 @@ void fillRandomData(Matrix* matrix) {
   srand ( time(NULL) );
   for (int x = 0; x < matrix->width; x++) {
     for (int y = 0; y < matrix->height; y++) {
-      matrix->data[x][y] = rand() % RANGE + 1;
+      matrix->data[x][y] = rand() % RANGE;
     }
   }
 }
@@ -79,10 +84,12 @@ void printArray( int** arr, int width, int height ) {
 }
 
 int** differentiateX(Matrix* matrix) {
+  /*Initialize*/
   int** dx = malloc(sizeof(int*) * (matrix->width));
   for (int x = 0; x < matrix->width; x++) {
     dx[x] = malloc(sizeof(int) * (matrix->height) );
   }
+  /*Convolve with [-1, 0, 1]*/
   for (int y = 0; y < matrix->height; y++) {
     dx[0][y] = matrix->data[1][y];
     for (int x = 1; x < matrix->width - 1; x++) {
@@ -108,3 +115,22 @@ int** differentiateY(Matrix* matrix) {
   return dy;
 }
 
+static inline int max(int** arr, int width, int height) {
+  int max = - UCHAR_MAX;
+  for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+      if (arr[x][y] > max) max = arr[x][y];
+    }
+  }
+  return max;
+}
+
+static inline int min(int** arr, int width, int height) {
+  int min =  UCHAR_MAX;
+  for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+      if (arr[x][y] < min) min = arr[x][y];
+    }
+  }
+  return min;
+}
