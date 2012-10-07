@@ -9,21 +9,24 @@ typedef struct {
   unsigned char** data;
 } Matrix;
 
-void parseArguments(int argc, char* argv[], Matrix* matrix);
-void initMatrix(Matrix* matrix);
-void fillRandomData(Matrix* matrix); 
-void printMatrix(Matrix* matrix); 
+void parseArguments( int argc, char* argv[], Matrix* matrix );
+void initMatrix( Matrix* matrix );
+void fillRandomData( Matrix* matrix );
+int** differentiateX( Matrix* matrix );
+
+void printMatrix( Matrix* matrix );
+void printArray( int** arr, int width, int height );
 
 int main(int argc, char* argv[]) {
 
-  int width, height;
   Matrix matrix;
   parseArguments(argc, argv, &matrix);
   initMatrix(&matrix);
   fillRandomData(&matrix);
   printMatrix(&matrix);
 
-  /*unsigned char** dx = differentiateX(&matrix);*/
+  int** dx = differentiateX(&matrix);
+  printArray(dx, matrix.width, matrix.height);
   return 0;
 }
 
@@ -53,6 +56,7 @@ void fillRandomData(Matrix* matrix) {
 }
 
 void printMatrix( Matrix* matrix) {
+  printf("\n");
   for (int y = matrix->height - 1; y >= 0; y--) {
     for (int x = 0; x < matrix->width; x++) {
       printf("%5u ", matrix->data[x][y]);
@@ -61,7 +65,28 @@ void printMatrix( Matrix* matrix) {
   }
 }
 
-unsigned char** differentiateX(unsigned char** matrix, int width, int height) {
+void printArray( int** arr, int width, int height ) {
+  printf("\n");
+  for (int y = height - 1; y >= 0; y--) {
+    for (int x = 0; x < width; x++) {
+      printf("%5d ", arr[x][y]);
+    }
+    printf("\n");
+  }
+}
 
+int** differentiateX(Matrix* matrix) {
+  int** dx = malloc(sizeof(int*) * (matrix->width));
+  for (int x = 0; x < matrix->width; x++) {
+    dx[x] = malloc(sizeof(int) * (matrix->height) );
+  }
+  for (int y = 0; y < matrix->height; y++) {
+    dx[0][y] = matrix->data[1][y];
+    for (int x = 1; x < matrix->width - 1; x++) {
+      dx[x][y] = (int) matrix->data[x+1][y] - matrix->data[x-1][y];
+    }
+    dx[matrix->width-1][y] = - matrix->data[matrix->width-2][y];
+  }
+  return dx;
 }
 
