@@ -31,12 +31,9 @@ int main(int argc, char* argv[]) {
   initMatrix(&matrix);
   /*Fill with random unsigned chars*/
   fillRandomData(&matrix);
-  printMatrix(&matrix);
-  /*Differentiate and print*/
+  /*Differentiate*/
   int** dx = differentiateX(&matrix);
-  printArray(dx, matrix.width, matrix.height);
   int** dy = differentiateY(&matrix);
-  printArray(dy, matrix.width, matrix.height);
   /*Compute min and max*/
   printf("The max and min for dx are: %d and %d\n", max(dx, matrix.width, matrix.height), min(dx, matrix.width, matrix.height));
   printf("The max and min for dy are: %d and %d\n", max(dy, matrix.width, matrix.height), min(dy, matrix.width, matrix.height));
@@ -77,26 +74,6 @@ void fillRandomData(Matrix* matrix) {
     for (int y = 0; y < matrix->height; y++) {
       matrix->data[x][y] = rand() % RANGE;
     }
-  }
-}
-
-void printMatrix( Matrix* matrix) {
-  printf("\n");
-  for (int y = matrix->height - 1; y >= 0; y--) {
-    for (int x = 0; x < matrix->width; x++) {
-      printf("%5u ", matrix->data[x][y]);
-    }
-    printf("\n");
-  }
-}
-
-void printArray( int** arr, int width, int height ) {
-  printf("\n");
-  for (int y = height - 1; y >= 0; y--) {
-    for (int x = 0; x < width; x++) {
-      printf("%5d ", arr[x][y]);
-    }
-    printf("\n");
   }
 }
 
@@ -151,3 +128,24 @@ static inline int min(int** arr, int width, int height) {
   }
   return min;
 }
+
+void printMatrix( Matrix* matrix) {
+  printf("\n");
+  for (int y = matrix->height - 1; y >= 0; y--) {
+    for (int x = 0; x < matrix->width; x++) {
+      printf("%5u ", matrix->data[x][y]);
+    }
+    printf("\n");
+  }
+}
+
+void printArray( int** arr, int width, int height ) {
+  printf("\n");
+  for (int y = height - 1; y >= 0; y--) {
+    for (int x = 0; x < width; x++) {
+      printf("%5d ", arr[x][y]);
+    }
+    printf("\n");
+  }
+}
+

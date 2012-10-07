@@ -1,5 +1,5 @@
 CC=c99
-CFLAGS=-g
+CFLAGS=-O3
 EXECUTABLE=differentiate
 SOURCE=differentiate.c
 

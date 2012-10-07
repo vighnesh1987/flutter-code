@@ -10,4 +10,7 @@
        y = 0  +-------------> x
             x = 0
 
-
+3. Derivatives are computed in the increasing x, y direction, as would be the
+   case in regular calculus
+4. The print commands assume 2, while printing out the arrays. Print commands are
+   accessible in an earlier commit
