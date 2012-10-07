@@ -1,0 +1,19 @@
+Create a C++ or C  (or language of your choice) program which performs the
+following in the order:
+
+1.  Take two arguments, width and height, from the command line
+2.  Create an unsigned char matrix M of size width x height
+3.  Fill M with random data
+4.  Apply [-1, 0, 1] filter along x and y axis (i.e. convolve the image with [-1,
+    0, 1] kernel along horizontal and vertical axis) in order to compute derivates
+    dx and dy of M along x and y direction respectively (you must explicitly
+    allocate & compute dx & dy matrices) 
+5.  Compute min and max values for both dx & dy matrices individually
+6.  Print total time taken by the machine in computing dx, dy, min and max
+    operations, and print computed min & max values
+
+Code Requirements (#3 applies for all languages):
+1. The code must be standard compliant with ANSI C++ 03 or C 99
+2. The code would be compiled using gcc/g++ -O3 <source files>
+3. "The code MUST be optimized primarily for speed (fast execution) and also for efficiency (in terms of memory). Attention to detail in code development is highly valued."
+
