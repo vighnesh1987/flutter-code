@@ -22,7 +22,8 @@ void printMatrix( Matrix* matrix );
 void printArray( int** arr, int width, int height );
 
 int main(int argc, char* argv[]) {
-
+  clock_t start, end;
+  start = clock();
   Matrix matrix;
   parseArguments(argc, argv, &matrix);
   initMatrix(&matrix);
@@ -35,6 +36,9 @@ int main(int argc, char* argv[]) {
   printf("The max and min for dx are: %d and %d\n", max(dx, matrix.width, matrix.height), min(dx, matrix.width, matrix.height));
   printArray(dy, matrix.width, matrix.height);
   printf("The max and min for dy are: %d and %d\n", max(dy, matrix.width, matrix.height), min(dy, matrix.width, matrix.height));
+
+  end = clock();
+  printf("Total time taken: %.4f msec\n", (float) (end-start) / (CLOCKS_PER_SEC/1000));
   return 0;
 }
 
