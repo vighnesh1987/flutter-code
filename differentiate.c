@@ -90,10 +90,12 @@ int** differentiateX(Matrix* matrix) {
   /*Convolve with [-1, 0, 1]*/
   for (int y = 0; y < matrix->height; y++) {
     dx[0][y] = matrix->data[1][y];
-    for (int x = 1; x < matrix->width - 1; x++) {
+    dx[matrix->width-1][y] = - matrix->data[matrix->width-2][y];
+  }
+  for (int x = 1; x < matrix->width - 1; x++) {
+    for (int y = 0; y < matrix->height; y++) {
       dx[x][y] = (int) matrix->data[x+1][y] - matrix->data[x-1][y];
     }
-    dx[matrix->width-1][y] = - matrix->data[matrix->width-2][y];
   }
   return dx;
 }
