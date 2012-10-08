@@ -91,15 +91,16 @@ int** differentiateX(Matrix* matrix) {
   for (int x = 0; x < matrix->width; x++) {
     dx[x] = malloc(sizeof(int) * (matrix->height) );
   }
+  unsigned char** data = matrix->data;
   int h = matrix->height, w = matrix->width;
   /*Convolve with [-1, 0, 1]*/
   for (int y = 0; y < matrix->height; y++) {
-    dx[0][y] = matrix->data[1][y];
-    dx[w-1][y] = - matrix->data[w-2][y];
+    dx[0][y] = data[1][y];
+    dx[w-1][y] = - data[w-2][y];
   }
   for (int x = 1; x < w - 1; x++) {
     for (int y = 0; y < h; y++) {
-      dx[x][y] = (int) matrix->data[x+1][y] - matrix->data[x-1][y];
+      dx[x][y] = (int) data[x+1][y] - data[x-1][y];
     }
   }
   return dx;
@@ -110,14 +111,14 @@ int** differentiateY(Matrix* matrix) {
   for (int y = 0; y < matrix->height; y++) {
     dy[y] = malloc(sizeof(int) * (matrix->width ) );
   }
-
+  unsigned char** data = matrix->data;
   int h = matrix->height, w = matrix->width;
   for (int x = 0; x < w; x++) {
-    dy[x][0] = matrix->data[x][1];
+    dy[x][0] = data[x][1];
     for (int y = 1; y < h - 1; y++) {
-      dy[x][y] = (int) matrix->data[x][y+1] - matrix->data[x][y-1];
+      dy[x][y] = (int) data[x][y+1] - data[x][y-1];
     }
-    dy[x][h - 1] = - matrix->data[x][h - 2];
+    dy[x][h - 1] = - data[x][h - 2];
   }
   return dy;
 }
