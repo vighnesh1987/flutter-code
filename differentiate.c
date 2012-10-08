@@ -3,6 +3,7 @@
 #include<time.h>
 #include<limits.h>
 #define RANGE (UCHAR_MAX + 1)
+#define CLOCKS_PER_MSEC (CLOCKS_PER_SEC/1000)
 
 typedef struct {
   int width;
@@ -42,8 +43,8 @@ int main(int argc, char* argv[]) {
   printf("The max and min for dy are: %d and %d\n", max(dy, matrix.width, matrix.height), min(dy, matrix.width, matrix.height));
   /*End timer*/
   end = (double) clock();
-  printf("Total time taken: %.4f msec\n", (double) (end-start) / (CLOCKS_PER_SEC/1000));
-  printf(" dx takes %f, dy takes %f clock ticks\n", mid1 - start, mid2 - mid1);
+  printf("Total time taken: %.4f msec\n", (end-start) / CLOCKS_PER_MSEC);
+  printf("dx takes %f, dy takes %f msec\n", (mid1 - start) / CLOCKS_PER_MSEC, (mid2 - mid1) / CLOCKS_PER_MSEC);
   /*Print*/
   /*printMatrix(&matrix);*/
   /*printArray(dx, matrix.width, matrix.height);*/
