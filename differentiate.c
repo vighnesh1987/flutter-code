@@ -30,17 +30,20 @@ int main(int argc, char* argv[]) {
   /*Fill with random unsigned chars*/
   fillRandomData(&matrix);
   /*Start timer*/
-  clock_t start, end;
-  start = clock();
+  double start,mid1, mid2, end;
+  start = (double) clock();
   /*Differentiate*/
   int** dx = differentiateX(&matrix);
+  mid1 = (double) clock();
   int** dy = differentiateY(&matrix);
+  mid2 = (double) clock();
   /*Compute min and max*/
   printf("The max and min for dx are: %d and %d\n", max(dx, matrix.width, matrix.height), min(dx, matrix.width, matrix.height));
   printf("The max and min for dy are: %d and %d\n", max(dy, matrix.width, matrix.height), min(dy, matrix.width, matrix.height));
   /*End timer*/
-  end = clock();
-  printf("Total time taken: %.4f msec\n", (float) (end-start) / (CLOCKS_PER_SEC/1000));
+  end = (double) clock();
+  printf("Total time taken: %.4f msec\n", (double) (end-start) / (CLOCKS_PER_SEC/1000));
+  printf(" dx takes %f, dy takes %f clock ticks\n", mid1 - start, mid2 - mid1);
   /*Free everything*/
   for (int x = 0; x < matrix.width; x++) {
     free(matrix.data[x]);
