@@ -44,6 +44,10 @@ int main(int argc, char* argv[]) {
   end = (double) clock();
   printf("Total time taken: %.4f msec\n", (double) (end-start) / (CLOCKS_PER_SEC/1000));
   printf(" dx takes %f, dy takes %f clock ticks\n", mid1 - start, mid2 - mid1);
+  /*Print*/
+  /*printMatrix(&matrix);*/
+  /*printArray(dx, matrix.width, matrix.height);*/
+  /*printArray(dy, matrix.width, matrix.height);*/
   /*Free everything*/
   for (int x = 0; x < matrix.width; x++) {
     free(matrix.data[x]);
